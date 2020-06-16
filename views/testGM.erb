@@ -1,0 +1,14 @@
+
+<h1>hello world </h1>
+
+<iframe
+  width="600"
+  height="450"
+  frameborder="0" 
+  style="border:0"
+  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDl5GikVcjQ19Wcu6yZbHn1KiQ49ejCg1s&q=42.053898,-87.670043" allowfullscreen>
+</iframe>
+
+
+<h2><%= Geocoder.search("the arch, Evanston, IL").first.coordinates.join(",") %></h2>
+
