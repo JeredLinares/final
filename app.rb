@@ -18,7 +18,50 @@ after { puts; }                                                                 
 # events_table = DB.from(:events)
 # rsvps_table = DB.from(:rsvps)
 
-get "/" do
-    view "testGM"
+before do
+    
 end
 
+
+get "/" do
+    view "home"
+
+end
+
+get "/login" do
+    view "login"
+
+end
+get "/players" do
+    view "players"
+
+end
+get "/locations" do
+    view "locations"
+
+end
+get "/locations/:id" do
+    view "locationdesc"
+
+end
+get "/new/location" do
+    view "home"
+
+end
+get "/new/player" do
+    view "makeuser"
+
+end
+get "/score" do
+    view "score"
+    
+end
+
+
+get "/logout" do
+    
+    #Logout
+
+
+    view "home"
+end
