@@ -27,7 +27,7 @@ DB.create_table! :flags do
   primary_key :id
   foreign_key :flag_id
   foreign_key :player_id
-  Timestamp :time_captured, 'timestamp with time zone'
+  Timestamp :time_captured
 end
 
 # Insert initial (seed) data
@@ -36,7 +36,7 @@ places_table = DB.from(:places)
 flags_table = DB.from(:flags)
 
 players_table.insert(username: "jered",
-					team: "blue"
+					team: "blue",
                     email: "jered.linares@kellogg.northwestern.edu")
 
 places_table.insert(name: "The Arch", 
@@ -50,4 +50,17 @@ places_table.insert(name: "Bonfire Pit",
 
 
 flags_table.insert(flag_id: 1,
-					player_id: 1)
+                    player_id: 1,
+                    time_captured: Time.new(2020,6,16))
+
+
+flags_table.insert(flag_id: 2,
+                    player_id: 1,
+                    time_captured: Time.new(2020,6,16))
+
+flags_table.insert(flag_id: 3,
+                    player_id: 1,
+                    time_captured: Time.new(2020,6,16))
+
+
+
