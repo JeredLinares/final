@@ -14,7 +14,8 @@ DB.create_table! :players do
 	primary_key :id
 	String :username
 	String :team
-	String :email
+    String :email
+    String :password
 end
 
 DB.create_table! :places do
@@ -37,7 +38,8 @@ flags_table = DB.from(:flags)
 
 players_table.insert(username: "jered",
 					team: "blue",
-                    email: "jered.linares@kellogg.northwestern.edu")
+                    email: "jered.linares@kellogg.northwestern.edu",
+                    password: "$2a$12$ANSIgh9KgpgNUvcPQbt1HuGa8TK9Ybjrf0QIMGk95gY/1M8QUDzx6")
 
 places_table.insert(name: "The Arch", 
                     coordinates: "42.051130,-87.677226")

@@ -15,17 +15,19 @@ before { puts; puts "--------------- NEW REQUEST ---------------"; puts }       
 after { puts; }                                                                       #
 #######################################################################################
 
-# events_table = DB.from(:events)
-# rsvps_table = DB.from(:rsvps)
+players_table = DB.from(:players)
+places_table = DB.from(:places)
+flags_table = DB.from(:flags)
 
 before do
-    
+    @current_user = players_table.where(:id=>session[:user_id]).to_a[0]
+    puts "the user"
+    puts @current_user.inspect
 end
 
 
 get "/" do
     view "home"
-
 end
 
 get "/login" do
@@ -50,18 +52,10 @@ get "/new/location" do
 end
 get "/new/player" do
     view "makeuser"
-
 end
 get "/score" do
     view "score"
-    
 end
-
-
 get "/logout" do
-    
-    #Logout
-
-
     view "home"
 end
