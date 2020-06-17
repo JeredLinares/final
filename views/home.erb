@@ -1,14 +1,17 @@
 
 <%
-# If logged in
-%>
-
-<h5> Use the locations tab to select a location to capture </h5>
-
-<%
-#if not logged in
+    if session[:user_id] == nil
 %>
 
 <h5> Please login or register to play Capture the flag </h5>
 
+<%
+    else
+%>
+
+
+<h5> Use the locations tab to select a location to capture </h5>
+<%
+    end
+%>
 

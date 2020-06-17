@@ -1,25 +1,34 @@
 <div>
-    <% #if failed login%>
-    <h4 style="color:red">That login is not in our records.</h4>
 
-    <% #if not logged in %>
+    <% if @current_user %>
+        <h5> You are already logged in. </h5>
 
-    <form method="POST">
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" aria-describedby="username">
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    <br />
-    <h5>You must be registered to play</h5>
-    <form action="/new/player">
-    <button type="submit" class="btn btn-primary">Register</button>
-    </form>
+    <% else %>
+
+        <% if @failed==1 %>
+            <h4 style="color:red">That login is not in our records.</h4>
+            <h4 style="color:red">Please try again. </h4>
+        <% end %>
+
+        <form method="POST" action="/login/validate">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input name="username" type="text" class="form-control" id="username" aria-describedby="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input name="password" type="password" class="form-control" id="password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <br />
+        </form>
+        <form action="/new/player">
+            <div>
+                <h5>You must be registered to play</h5>
+                <h5>Create an account by registirng. </h5>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </form
+    <% end %>
 </div>
-
-<% #if logged in redirect %>

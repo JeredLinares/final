@@ -18,6 +18,7 @@ after { puts; }                                                                 
 players_table = DB.from(:players)
 places_table = DB.from(:places)
 flags_table = DB.from(:flags)
+@failed=0           #has there been a failed login
 
 before do
     @current_user = players_table.where(:id=>session[:user_id]).to_a[0]
@@ -32,8 +33,38 @@ end
 
 get "/login" do
     view "login"
+end
+
+post "/login/validate" do
+    puts params
+
+    username = params["username"]
+    #Note: This is a security vulnerability. 
+    #Should upgrade to client side password encryption.
+    #We are depending on transmission encryption which is likely not as strong as BCrypt
+    entered_password = params["password"]
+    matching_user = players_table.where(:username => username).to_a[0]
+
+    if matching_user
+
+        if BCrypt::Password.new(matching_user[:password]) == entered_password
+            @failed=0
+            session[:user_id]=matching_user[:id]
+            view "home"
+        else    
+            #may not have entered a password
+            @failed=1
+            view "login"
+        end
+    else
+        @failed=1
+        view "login"
+    end
+
 
 end
+
+
 get "/players" do
     view "players"
 
@@ -51,11 +82,22 @@ get "/new/location" do
 
 end
 get "/new/player" do
-    view "makeuser"
+    view "newplayer"
 end
+
+post "/new/player/validate" do
+
+    players_table.insert(:username=> params["username"],
+                        :team=>params["team"],
+                        :password=>BCrypt::Password.create(params["password"]))
+    puts params
+    view "usercreated"
+end
+
 get "/score" do
     view "score"
 end
 get "/logout" do
+    session.clear
     view "home"
 end
