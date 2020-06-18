@@ -1,0 +1,26 @@
+
+<div>
+    <h4> Create New Location </h4>
+
+    <% if @bad_add != nil %>
+    <h4 style="color:red">Bad Address</h4>
+    <% end %>
+
+    <form method="POST" action="/new/location/validate">
+        <div class="form-group">
+            <label>Location Name:</label>
+            <input type="text" name="name" class="form-control" value="Flat Top">
+        </div>
+        <div class="form-group">
+            <label>Address: </label>
+                <input type="text" name="address" class="form-contro" value="707 Church St">
+            <label>city: </label>                
+                <input type="text" name="city" class="form-contro" value="Evanston">
+            <label>State: </label>                
+                <input type="text" name="state" class="form-contro" value="IL">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+
+    </form>
+</div>

@@ -1,0 +1,24 @@
+
+
+
+<div>
+    <h4> Location Description </h4>
+
+    <div>
+        Location: <%= @places.where(:id=>params[:id]).to_a[0][:name] %>
+        <br />
+        Coordinates: <%= @places.where(:id=>params[:id]).to_a[0][:coordinates] %>
+        <br />
+
+        <iframe
+            width="600"
+            height="450"
+            frameborder="0" 
+            style="border:0"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDl5GikVcjQ19Wcu6yZbHn1KiQ49ejCg1s&q=<%= @places.where(:id=>params[:id]).to_a[0][:coordinates] %>" allowfullscreen>
+        </iframe>
+
+        
+
+
+</div>

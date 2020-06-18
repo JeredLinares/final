@@ -1,0 +1,30 @@
+
+<div>
+    <h4> All Locations </h4>
+    <% if @note != nil %>
+        <h5 style="color:red"><%= @note %> </h5>
+    <% end %> 
+
+
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">Location Name</th>
+            <th scope="col">See Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for place in @places %>
+                <tr>
+                <td><%= place[:name] %></td>
+                <td><a href="/locations/<%= place[:id] %>" class="btn btn-primary">Details</a></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+
+    <br />
+
+    <a href="/new/location" class="btn btn-primary">Create a New Location</a>
+
+</div>

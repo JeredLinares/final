@@ -24,6 +24,7 @@ before do
     @current_user = players_table.where(:id=>session[:user_id]).to_a[0]
     puts "the user"
     puts @current_user.inspect
+    @places=DB[:places]
 end
 
 
@@ -39,9 +40,6 @@ post "/login/validate" do
     puts params
 
     username = params["username"]
-    #Note: This is a security vulnerability. 
-    #Should upgrade to client side password encryption.
-    #We are depending on transmission encryption which is likely not as strong as BCrypt
     entered_password = params["password"]
     matching_user = players_table.where(:username => username).to_a[0]
 
@@ -60,12 +58,11 @@ post "/login/validate" do
         @failed=1
         view "login"
     end
-
-
 end
 
 
 get "/players" do
+    @players = DB[:players]
     view "players"
 
 end
@@ -78,9 +75,37 @@ get "/locations/:id" do
 
 end
 get "/new/location" do
-    view "home"
+
+
+    view "newlocation"
 
 end
+
+post "/new/location/validate" do
+
+    results = Geocoder.search("401 N. Michigan Ave, Chicago, IL")
+
+    puts results.inspect
+    puts results.length
+
+    if results.length >1
+        @bad_add=nil
+        @note="There were multiple matches, the first match was used"
+        #multiple matches
+        view "/locations"
+    elsif results.length==1
+        @bad_add=nil
+        #one match
+    else 
+        # bad
+        @bad_add=1
+        view "newlocation"
+    end
+
+
+end
+
+
 get "/new/player" do
     view "newplayer"
 end
