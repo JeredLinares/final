@@ -25,9 +25,9 @@ end
 
 DB.create_table! :flags do
   primary_key :id
-  foreign_key :flag_id
+  foreign_key :place_id
   foreign_key :player_id
-  Timestamp :time_captured
+  Time :time_captured
 end
 
 # Insert initial (seed) data
@@ -44,20 +44,5 @@ places_table.insert(name: "The Global Hub",
 
 places_table.insert(name: "Bonfire Pit", 
                     coordinates: "42.053828, -87.670237")
-
-
-flags_table.insert(flag_id: 1,
-                    player_id: 1,
-                    time_captured: Time.new(2020,6,16))
-
-
-flags_table.insert(flag_id: 2,
-                    player_id: 1,
-                    time_captured: Time.new(2020,6,16))
-
-flags_table.insert(flag_id: 3,
-                    player_id: 1,
-                    time_captured: Time.new(2020,6,16))
-
 
 

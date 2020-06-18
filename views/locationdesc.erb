@@ -18,7 +18,54 @@
             src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDl5GikVcjQ19Wcu6yZbHn1KiQ49ejCg1s&q=<%= @places.where(:id=>params[:id]).to_a[0][:coordinates] %>" allowfullscreen>
         </iframe>
 
-        
+    </div>
+    <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Player</th>
+                    <th scope="col">Team</th>
+                    <th scope="col">Capture Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% #puts DB[:flags].first.inspect %>
+                    <%  for loc_flag in @flags %>
+                        <% #puts loc_flag.inspect %>
+                        <% if loc_flag[:place_id].to_s == params["id"].to_s %>
+                        
+                            <tr>
+                            <td><%= @players.where(id: loc_flag[:player_id]).first[:username] %></td>
+                            <td><%= @players.where(id: loc_flag[:player_id]).first[:team] %></td>
+                            <td><%= Time.at(loc_flag[:time_captured]).to_s %> UTC</td>
+                            </tr>
+
+                        <% end %>
+
+                    <% end %>
+                    
+                </tbody>
+            </table>
+            <br />
+            <a href="/new/flag/<%= params["id"] %>" class="btn btn-primary">Capture Location</a>
+
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+    </div>
 
 
 </div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+

@@ -1,0 +1,40 @@
+<div>
+
+        <table class="table table-hover">
+        <thead>
+            <tr>
+            <th scope="col">Team</th>
+            <th scope="col">Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td style="color:red">Red</td>
+                <% red_score=0 %>
+                    <% for flag in @flags %>
+                        <% if @players.where(id: flag[:player_id]).first[:team]=="red" %>
+                            <% puts flag[:time_captured].tv_sec %>
+                            <% red_score = red_score + (Time.now.tv_sec - flag[:time_captured].tv_sec) %>
+                        <% end %>
+                    <% end %>
+                    <td><%= red_score.to_s %></td>
+            </tr>
+            <tr>
+
+
+            <td style="color:blue">Blue</td>
+                <% blue_score=0 %>
+                    <% for flag in @flags %>
+                        <% if @players.where(id: flag[:player_id]).first[:team]=="blue" %>
+                            <% puts flag[:time_captured].tv_sec %>
+                            <% blue_score = blue_score + (Time.now.tv_sec - flag[:time_captured].tv_sec) %>
+                        <% end %>
+                    <% end %>
+                    <td><%= blue_score.to_s %></td>
+            </tr>
+        </tbody>
+        </table>
+
+
+
+<div>

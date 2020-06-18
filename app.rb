@@ -21,10 +21,29 @@ flags_table = DB.from(:flags)
 @failed=0           #has there been a failed login
 
 before do
+    #kill old sessions
+    #should check against a logined in table, but this works for MVP TODO:fix
+    #puts "check session"
+    if session[:user_id]
+        #puts "check match"
+        user_match = DB[:players].where(id: session[:user_id])
+        #puts user_match.inspect
+        if user_match.count==1
+            #session user is in users table
+        else
+            #puts "clear session"
+            session.clear
+        end
+    end
+
+
+
     @current_user = players_table.where(:id=>session[:user_id]).to_a[0]
     puts "the user"
     puts @current_user.inspect
     @places=DB[:places]
+    @players=DB[:players]
+    @flags=DB[:flags]
 end
 
 
@@ -71,6 +90,11 @@ get "/locations" do
 
 end
 get "/locations/:id" do
+    
+    puts params["id"]
+
+    #@loc_flag=DB[:flags].where(:id=>params["id"])
+
     view "locationdesc"
 
 end
@@ -99,8 +123,6 @@ post "/new/location/validate" do
                 name: params["name"],
                 coordinates: coords
             )
-
-
 
             if results.length==1
                 @add_note="New Location added"
@@ -131,9 +153,22 @@ post "/new/player/validate" do
     view "usercreated"
 end
 
+get "/new/flag/:place_id" do
+    #add capture to flags table
+
+    DB[:flags].insert(
+        place_id: params["place_id"],
+        player_id: session["user_id"],
+        time_captured: Time.now
+    )
+    #show new data
+    view "flag"
+end
+
 get "/score" do
     view "score"
 end
+
 get "/logout" do
     session.clear
     view "home"
