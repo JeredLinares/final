@@ -91,6 +91,17 @@ post "/new/location/validate" do
     puts results.length
 
     if results.length >=1
+
+            coords = results[0].latitude.to_s+","+results[0].longitude.to_s
+            puts coords
+
+            places_table.insert(
+                name: params["name"],
+                coordinates: coords
+            )
+
+
+
             if results.length==1
                 @add_note="New Location added"
             else
