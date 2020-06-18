@@ -100,9 +100,11 @@ get "/locations/:id" do
 end
 get "/new/location" do
 
-
-    view "newlocation"
-
+    if session[:user_id]!=nil
+        view "newlocation"
+    else    
+        view "login"
+    end
 end
 
 post "/new/location/validate" do
@@ -154,15 +156,17 @@ post "/new/player/validate" do
 end
 
 get "/new/flag/:place_id" do
-    #add capture to flags table
-
-    DB[:flags].insert(
-        place_id: params["place_id"],
-        player_id: session["user_id"],
-        time_captured: Time.now
-    )
-    #show new data
-    view "flag"
+    if session[:user_id]!=nil
+        DB[:flags].insert(
+            place_id: params["place_id"],
+            player_id: session["user_id"],
+            time_captured: Time.now
+        )
+        #show new data
+        view "flag"
+    else
+        view "login"
+    end
 end
 
 get "/score" do
