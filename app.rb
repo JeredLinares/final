@@ -82,23 +82,24 @@ get "/new/location" do
 end
 
 post "/new/location/validate" do
+    search_add =  params["address"]+", "+params["city"]+", "+params["state"]
+    puts search_add
+    results = Geocoder.search(search_add)
 
-    results = Geocoder.search("401 N. Michigan Ave, Chicago, IL")
-
+    puts params.inspect
     puts results.inspect
     puts results.length
 
-    if results.length >1
-        @bad_add=nil
-        @note="There were multiple matches, the first match was used"
-        #multiple matches
-        view "/locations"
-    elsif results.length==1
-        @bad_add=nil
-        #one match
+    if results.length >=1
+            if results.length==1
+                @add_note="New Location added"
+            else
+                @add_note="There were multiple matches, the first match was used"
+            end
+        view "locations"
     else 
         # bad
-        @bad_add=1
+        @add_note="No results, no location added, please try again."
         view "newlocation"
     end
 
